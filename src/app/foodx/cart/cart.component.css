@@ -1,0 +1,33 @@
+.address{
+    border: 1px solid #d0d5d9;
+    width: 400px;
+}
+
+.address:hover{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    cursor: pointer;
+}
+
+.coupon{
+    margin-top: 40px;
+    border: 1px solid #d0d5d9;
+    border-style: dashed;
+    height: 50px;
+    width: 95%;
+}
+nav{
+    width: 100%;
+    position: fixed;
+    z-index: 1001;
+}
+.coupon:hover{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    cursor: pointer;
+}
+.bill{
+    width: 95%;
+}
+
+.discount img{
+    cursor: pointer;
+}

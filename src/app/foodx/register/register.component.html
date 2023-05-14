@@ -1,0 +1,42 @@
+
+
+  <div class="row register">
+    <div class="col-lg-7 text-center">
+      
+  </div>
+    <div class="col-lg-5 mt-5">
+        <form [formGroup]="registerForm" style="margin-top: 100px;" (ngSubmit)="signup()" class="border  p-5 ms-4">
+            <div class="mb-2">
+            <h3 class="text-center text-light">Registration</h3>
+            </div>
+            <div class="form-floating mb-2">
+                <input type="text" name="name" formControlName="name" class="form-control" id="floatingInput" placeholder="Account no.">
+                <label for="floatingInput">Full name</label>
+              </div>
+              <div *ngIf="this.registerForm.get('name')?.errors&&this.registerForm.get('name')?.touched" class="text-danger mb-3">invalid Fullname</div>
+              <div class="form-floating mb-2">
+                <input type="password" name="password" formControlName="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+              </div>
+              <div *ngIf="this.registerForm.get('password')?.errors&&this.registerForm.get('password')?.touched" class="text-danger mb-3">invalid Password</div>
+
+              
+              <div class="form-floating mb-2">
+                <input type="text" name="username" formControlName="username" class="form-control" id="floatingInput" placeholder="username">
+                <label for="floatingInput">Username</label>
+              </div>
+              <div *ngIf="this.registerForm.get('username')?.errors&&this.registerForm.get('username')?.touched" class="text-danger mb-3">invalid Username</div>
+              
+              
+              <div class="d-grid mt-3 button text-center">
+
+                <button type="submit" class="btn btn-success">Register
+                <div *ngIf="registerstatus"  role="status">
+                  <img style="width: 30px;" src="https://icon-library.com/images/ajax-loading-icon/ajax-loading-icon-18.jpg" alt="">
+                </div>
+                </button>
+              </div>
+        </form>
+    </div>
+    
+  </div>

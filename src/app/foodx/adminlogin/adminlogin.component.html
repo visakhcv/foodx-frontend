@@ -1,0 +1,39 @@
+<div class="row login">
+    <div class="col-lg-8 text-center ">
+    </div>
+    <div class="col-lg-4">
+      
+        <form style="margin-top: 150px;" [formGroup]="adminloginform" (ngSubmit)="adminlogin()"  class="border  p-5 me-4" >
+          
+            <div class="mb-2">
+            <h3 class="text-center text-light">Admin Login</h3>
+            </div>
+            <div class="form-floating mb-2">
+                <input type="text" name="username"  formControlName="username" class="form-control" id="floatingInput" placeholder="Username">
+                <label  for="floatingInput">Username</label>
+              </div>
+              <div *ngIf="this.adminloginform.get('username')?.errors&&this.adminloginform.get('username')?.touched" class="text-danger mb-3">invalid username</div>
+              <div class="form-floating">
+                <input type="password" name="password" formControlName="password"  class="form-control" id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+              </div>
+              <div *ngIf="this.adminloginform.get('password')?.errors&&this.adminloginform.get('password')?.touched"  class="text-danger mb-3">invalid Password</div>
+            
+
+              <div class="d-grid mt-3 button justify-items-center align-items-center">
+                <button type="submit"  class="btn btn-success">Login
+                  <div *ngIf="loginstatus"  role="status">
+                    <img style="width: 30px;" src="https://icon-library.com/images/ajax-loading-icon/ajax-loading-icon-18.jpg" alt="">
+                  </div>
+                </button>
+              </div>
+        </form>
+        <div class="role">
+        <div>
+          <a routerLink="/foodx/login">User Login</a>
+        </div>
+        <div *ngIf="!adminloginclicked">
+          <a routerLink="admin">Admin Login</a>
+        </div>
+    </div>
+</div>

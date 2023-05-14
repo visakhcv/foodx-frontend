@@ -1,1 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
+  @import url('https://fonts.googleapis.com/css2?family=Kanit&family=Merriweather+Sans&family=Nunito:wght@500&display=swap');
+
+ body{
+   background-color: #d0d5d9;
+    font-family: 'Merriweather Sans', sans-serif;;
+ } 
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

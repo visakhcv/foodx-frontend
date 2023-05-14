@@ -1,0 +1,217 @@
+<nav class="navbar navbar-expand-lg bg-light">
+  <div class="container px-4 px-lg-5">
+      <a class="navbar-brand" routerLink=""><img style="width: 90px;" src="https://foodx.ca/wp3/wp-content/uploads/2020/02/food-x-black.png" alt=""></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" style="margin-left: 900px;" id="navbarSupportedContent">
+          <form class="d-flex align-items-center">
+              <a class="btn " style="font-weight: 700;font-size: 1.2rem;" routerLink="products/cart">
+                  <i style="color: orange;" class="fa fa-sharp fa-solid fa-circle-info me-1"></i>
+                  Help
+              </a>
+              <div  class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{user}}
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" (click)="logout()" routerLink="">Logout</a></li>
+                  </ul>
+                </div>
+              
+          </form>
+      </div>
+  </div>
+</nav>
+
+
+<div *ngIf="cartitems.length==0" style="padding-top: 100px;height: 85vh;" class="container ">
+    <div class="row ">
+        <div class="col text-center">
+            <img style="width: 500px;" src="https://assets.materialup.com/uploads/87d4df96-a55f-4f4b-9a17-a696eded97f3/preview.gif" alt="">
+            <h3 class="text-center mt-3">Your cart is empty</h3>
+            <a class="btn btn-success mt-4" routerLink="">shop more</a>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="cartitems.length!=0" class="container " style="padding-top: 50px;">
+    <div class="row">
+
+
+        <div *ngIf="!proceedtopaymentstatus" class="col-lg-7 mt-5 mb-5 me-4 bg-light">
+            <div class="ms-3 mt-5 mb-5">
+                <div >
+                    <h4>Add your delivery</h4>
+                </div>
+                <div class="mt-5 address" style="width: 100%;">
+                    <div  class="ms-3 mt-2 mb-2">
+                    <h6 ><i class="fa-sharp fa-solid fa-location-dot me-3"></i> Add New Address </h6>
+                    <form style="width: 95%;" [formGroup]="addressform" (ngSubmit)="submitbtnclicked()">
+                        <div class="form-floating mb-3">
+                            <input type="text" name="name"  formControlName="name" class="form-control" id="floatingInput" placeholder="Full name" required>
+                            <label for="floatingInput"> Fullname</label>
+                          </div>
+                          <div class="form-floating mb-3">
+                            <input type="text" name="flat" formControlName="flat" class="form-control" id="floatingflat" placeholder="Apaartment/flat" required>
+                            <label for="floatingflat">Apaartment/flat</label>
+                          </div>
+                          <div class="form-floating mb-3">
+                            <input type="text" name="street" formControlName="street" class="form-control" id="floatingstreet" placeholder="Street" required>
+                            <label for="floatingstreet">Street</label>
+                          </div>
+                          <div class="form-floating mb-3">
+                            <input type="text" name="state" formControlName="state" class="form-control" id="floatingstate" placeholder="state" required>
+                            <label for="floatingstate">state</label>
+                          </div>
+                          <div>
+                            <button  class="btn btn-primary">Proceed to payment</button>
+                          </div>
+                        </form>
+            
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="proceedtopaymentstatus" class="col-lg-7 mt-5 mb-5 me-4 bg-light">
+            <div class="ms-3 mt-5 mb-5" style="width: 100%;">
+                <div >
+                    <h4>Your Payment Address</h4>
+                </div>
+                <div class="mt-5 row address" style="height: 400px;padding-left: 20px;padding-top: 20px;" >
+                    <div class="col-lg-4">
+                        <h6>Name</h6>
+                        <h6>Flat</h6>
+                        <h6>Street</h6>
+                        <h6>State</h6>
+                    </div>
+                    <div class="col-lg-1">
+                        <h6>:</h6>
+                        <h6>:</h6>
+                        <h6>:</h6>
+                        <h6>:</h6> 
+                    </div>
+                    <div class="col-lg-7">
+                        <h6>{{username}}</h6>
+                        <h6>{{flat}}</h6>
+                        <h6>{{street}}</h6>
+                        <h6>{{state}}</h6>
+                    </div>
+                    <div class="text-center">
+                      <h6> <b>To Pay : {{carttotal}} $</b> </h6>
+                    </div>
+                    <div  *ngIf="!showpaypal" ><button (click)="makepayment()" style="width: 90%;" class="btn btn-success">Make Payment</button></div>
+                    
+              
+                    <div *ngIf="showcancel">
+                      <p class="text-warning text-center">Your transaction has been canceled</p>
+                    </div>
+              
+                    <div *ngIf="showerror">
+                      <p class="text-danger text-center">transaction has been canceled</p>
+                    </div>
+                    <div *ngIf="showpaypal" style="width: 90%;" ><ngx-paypal [config]="payPalConfig"></ngx-paypal></div>
+                    <div *ngIf="showsuccess">
+                      <p class="text-success text-center">Transaction has been completed succesfully....Thank you for shopping with us</p>
+                    </div> 
+                </div>
+                
+            </div>
+            
+        </div>
+        
+
+
+
+        <div class="col-lg-4 mt-5 mb-5 bg-light">
+            <div class="mt-4 ms-4" >
+                <div class="d-flex align-items-center">
+                    <img style="width: 70px;" src="https://foodx.ca/wp3/wp-content/uploads/2020/02/food-x-black.png" alt="">
+                    <h6 class="mt-2 ms-4">Food App</h6> 
+                </div>
+                <div class="d-flex mt-4 align-items-center" *ngFor="let items of cartitems"> 
+                    <div class="me-2">
+                        <img style="width: 60px;" [src]="items.image" alt="">
+                    </div>
+                    <h6 style="width: 90px;" class="me-3">{{items.name}}</h6>
+                    <button (click)="decart(items.id)" style="border: none;"><i class="fa fa-duotone fa-minus"></i></button>
+                    <input  class="form-control text-center" [value]="items.quantity" id="inputQuantity" type="num" style="max-width: 2.5rem; height: 25px;" readonly/>
+                    <button (click)="incart(items.id)" style="border: none;"><i class="fa fa-duotone fa-plus"></i></button>
+                    <h6 style="width: 80px;" class="ms-4 mt-1">$ {{items.price}}</h6>
+                    <button (click)="removecartitem(items.id)" class="btn text-danger"><i class="fa fa-duotone fa-trash"></i> </button>
+                </div>
+
+
+                <div class=" coupon">
+                     <button type="button" style="border: none;background-color: white;width: 90%;" (click)="offerclicked()" class="mt-2 ms-3"><i class="fa fa-solid fa-percent me-2"></i> Apply coupon</button>
+                </div>
+                <!-- discount coupons -->
+                <div *ngIf="offerclickedstatus" class="d-flex discount justify-content-evenly mt-3">
+                <!-- discount 10% -->
+                <div *ngIf="!discountclickedstatus">
+                <img *ngIf="carttotal<500" (click)="discount10()"  width="70px" src="https://cdn.pixabay.com/photo/2017/09/26/19/56/discount-2789863_960_720.png" alt="">
+                </div>
+            <!-- discount 50% -->
+                <div *ngIf="!discountclickedstatus">
+                <img *ngIf="carttotal>=500" (click)="discount50()"  width="70px" src="https://cdn.pixabay.com/photo/2017/05/26/05/38/discount-2345221__480.png" alt="">
+                </div>
+                </div>
+
+                <div class="mt-4 bill">
+                    <h5 style="font-size: medium;"> <b>Bill Details</b> </h5>
+                    <div class="d-flex justify-content-between">
+                        <h6 style="font-size: small;color: #686b78;">Item Total</h6>
+                        <h6 style="font-size: small;color: #686b78;">{{carttotal}} $</h6>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <h6 style="font-weight: 700;">TO PAY</h6>
+                        <h6 style="font-weight: 700;">{{carttotal}} $</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Checkout Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p  class="text-success">Payment Details</p>
+          <p  class="text-success">Enter your delivery address</p>
+          <div >
+            <form >
+            <div class="form-floating mb-3">
+                <input type="text" name="username" formControlName="username" class="form-control" id="floatingInput" placeholder="username" required>
+                <label for="floatingInput">username</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" name="flat" formControlName="flat" class="form-control" id="floatingflat" placeholder="Apaartment/flat" required>
+                <label for="floatingflat">Apaartment/flat</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" name="street" formControlName="street" class="form-control" id="floatingstreet" placeholder="Street" required>
+                <label for="floatingstreet">Street</label>
+              </div>
+              <div class="form-floating mb-3">
+                <input type="text" name="state" formControlName="state" class="form-control" id="floatingstate" placeholder="state" required>
+                <label for="floatingstate">state</label>
+              </div>
+              <div>
+                <button (click)="submitbtnclicked()"  class="btn btn-primary">Proceed to payment</button>
+              </div>
+            </form>
+
+            <!-- delivery address div -->
+            
+          
+
+        </div>
+      </div>
+    </div>
+  </div>

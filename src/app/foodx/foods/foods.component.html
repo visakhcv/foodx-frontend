@@ -1,0 +1,238 @@
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" routerLink=""><img style="width: 90px;" src="https://foodx.ca/wp3/wp-content/uploads/2020/02/food-x-black.png" alt=""></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" style="margin-left: 300px;" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item">
+                    <input style="width: 400px;" (keyup)="search($event)"  placeholder="What you want!!" type="text" class="form-control">
+                </li>
+                
+            </ul>
+            <form class="d-flex align-items-center">
+                <a class="btn " style="font-weight: 700;font-size: 1.2rem;" routerLink="products/cart">
+                    <i style="color: orange;" class="fa fa-sharp fa-solid fa-circle-info me-1"></i>
+                    Help
+                </a>
+                <a *ngIf="loginstatus" class="btn " style="font-weight: 700;font-size: 1.2rem;" routerLink="cart">
+                    <i style="color: orange;" class="fa fa-duotone fa-cart-plus me-1"></i>
+                    Cart
+                    <span class="badge bg-dark text-light rounded-pill">{{cartitems}}</span>
+                </a>
+                <div *ngIf="loginstatus" class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                      {{user}}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li><a class="dropdown-item" (click)="logout()" routerLink="">Logout</a></li>
+                    </ul>
+                  </div>
+                
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div  *ngIf="loginstatus"> 
+<div class="main" style="width: 100%;height: 650px;">
+    <div class="text-center">
+        <h3 style="padding-top: 300px;font-size: 3rem;font-weight: 700;">Welcome to FoodX</h3>
+    </div>
+</div>
+    <div class="buttons mb-5">
+        <button (click)="getallclick()" class="btn btn-secondary">  All</button>
+        <button (click)="getpizzaclick()" class="btn btn-secondary"><img style="width: 25px;margin-right: 5px;" src="https://cdn-icons-png.flaticon.com/512/6978/6978255.png" alt=""> Pizza</button>
+        <button (click)="getsaladclick()" class="btn btn-secondary"><img style="width: 25px;margin-right: 5px;" src="https://cdn-icons-png.flaticon.com/512/1625/1625042.png" alt=""> Salads</button>
+        <button (click)="getdrinkclick()" class="btn btn-secondary"><img style="width: 25px;margin-right: 5px;" src="https://cdn-icons-png.flaticon.com/512/816/816189.png" alt="">Drinks</button>
+        <button (click)="getsauceclick()" class="btn btn-secondary"><img style="width: 25px;margin-right: 5px;" src="https://cdn-icons-png.flaticon.com/512/2916/2916136.png" alt=""> Sauces</button>
+    </div>
+
+</div>
+
+<div *ngIf="!loginstatus" class="main" style="width: 100%;height: 650px;">
+    <div class="text-center">
+        <h3 style="padding-top: 80px;font-size: 3rem;font-weight: 700;">Please Login to FoodX</h3>
+    </div>
+    <div class="home-login" style="margin-top: 50px;">
+        <button routerLink="login" class="btn btn-success">Login</button>
+    </div>
+</div>
+
+<div *ngIf="loginstatus">
+    <div *ngIf="!getallclicked">
+    <h3 class="mt-3 text-center " style="font-weight: 600;">Pick your Order</h3>
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 " >
+                    <div class="col mb-5"  *ngFor="let foods of allfoods| filter : searchterm : 'name' ">
+                        <div style="height: 350px;" class="card p-3 ">
+                            <!-- Product image-->
+                            <img style="height: 150px;" [src]="foods.image" class="card-img-top"  alt="..." />
+                            <!-- Product details-->
+                            <div class="card-body p-4">
+                                <div class="text-center mb-4">
+                                    <!-- Product name-->
+                                    <h5 class="fw-bolder">{{foods.name}}</h5>
+                                    <!-- Product price-->
+                                    Price : {{foods.price}} $
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="d-flex justify-content-evenly">
+                                    <!-- view link -->
+                                    <a class="btn btn-warning mt-auto "  routerLink="view/{{foods.id}}" ><i class="fa fa-solid fa-eye text-light"></i> </a>
+                                    <!-- add cart btn -->
+                                    <button (click)="addtocart(foods)" class="btn btn-success"><i class="fa fa-solid fa-cart-plus"></i> </button>
+                                </div>
+                            
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>  
+        
+        
+        <!-- pizza -->
+        <div *ngIf="loginstatus">
+            <div *ngIf="getpizzaclicked">
+            <h3 class="mt-3 text-center " style="font-weight: 600;">Pick your Order</h3>
+                    <div class="container px-4 px-lg-5 mt-5">
+                        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 " >
+                            <div class="col mb-5"  *ngFor="let pizza of allpizza| filter : searchterm : 'name' ">
+                                <div style="height: 350px;" class="card p-3 ">
+                                    <!-- Product image-->
+                                    <img style="height: 150px;" [src]="pizza.image" class="card-img-top"  alt="..." />
+                                    <!-- Product details-->
+                                    <div class="card-body p-4">
+                                        <div class="text-center mb-4">
+                                            <!-- Product name-->
+                                            <h5 class="fw-bolder">{{pizza.name}}</h5>
+                                            <!-- Product price-->
+                                            Price : {{pizza.price}} $
+                                    </div>
+                                    <!-- Product actions-->
+                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                        <div class="d-flex justify-content-evenly">
+                                            <!-- view link -->
+                                            <a class="btn btn-warning mt-auto "  routerLink="view/{{pizza.id}}" ><i class="fa fa-solid fa-eye text-light"></i> </a>
+                                            <!-- add cart btn -->
+                                            <button (click)="addtocart(pizza)" class="btn btn-success"><i class="fa fa-solid fa-cart-plus"></i> </button>
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>      
+                
+                <!-- salad -->
+
+                <div *ngIf="loginstatus">
+                    <div *ngIf="getsaladclicked">
+                    <h3 class="mt-3 text-center " style="font-weight: 600;">Pick your Order</h3>
+                            <div class="container px-4 px-lg-5 mt-5">
+                                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 " >
+                                    <div class="col mb-5"  *ngFor="let salad of allsalad| filter : searchterm : 'name' ">
+                                        <div style="height: 350px;" class="card p-3 ">
+                                            <!-- Product image-->
+                                            <img style="height: 150px;" [src]="salad.image" class="card-img-top"  alt="..." />
+                                            <!-- Product details-->
+                                            <div class="card-body p-4">
+                                                <div class="text-center mb-4">
+                                                    <!-- Product name-->
+                                                    <h5 class="fw-bolder">{{salad.name}}</h5>
+                                                    <!-- Product price-->
+                                                    Price : {{salad.price}} $
+                                            </div>
+                                            <!-- Product actions-->
+                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                                <div class="d-flex justify-content-evenly">
+                                                    <!-- view link -->
+                                                    <a class="btn btn-warning mt-auto "  routerLink="view/{{salad.id}}" ><i class="fa fa-solid fa-eye text-light"></i> </a>
+                                                    <!-- add cart btn -->
+                                                    <button (click)="addtocart(salad)" class="btn btn-success"><i class="fa fa-solid fa-cart-plus"></i> </button>
+                                                </div>
+                                            
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>    
+                        
+                        
+                        <!--drink  -->
+
+                        <div *ngIf="loginstatus">
+                            <div *ngIf="getdrinkclicked">
+                            <h3 class="mt-3 text-center " style="font-weight: 600;">Pick your Order</h3>
+                                    <div class="container px-4 px-lg-5 mt-5">
+                                        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 " >
+                                            <div class="col mb-5"  *ngFor="let drink of alldrink| filter : searchterm : 'name' ">
+                                                <div style="height: 350px;" class="card p-3 ">
+                                                    <!-- Product image-->
+                                                    <img style="height: 150px;" [src]="drink.image" class="card-img-top"  alt="..." />
+                                                    <!-- Product details-->
+                                                    <div class="card-body p-4">
+                                                        <div class="text-center mb-4">
+                                                            <!-- Product name-->
+                                                            <h5 class="fw-bolder">{{drink.name}}</h5>
+                                                            <!-- Product price-->
+                                                            Price : {{drink.price}} $
+                                                    </div>
+                                                    <!-- Product actions-->
+                                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                                        <div class="d-flex justify-content-evenly">
+                                                            <!-- view link -->
+                                                            <a class="btn btn-warning mt-auto "  routerLink="view/{{drink.id}}" ><i class="fa fa-solid fa-eye text-light"></i> </a>
+                                                            <!-- add cart btn -->
+                                                            <button (click)="addtocart(drink)" class="btn btn-success"><i class="fa fa-solid fa-cart-plus"></i> </button>
+                                                        </div>
+                                                    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>      
+
+                 <!-- sauce -->
+
+                 <div *ngIf="loginstatus">
+                    <div *ngIf="getsauceclicked">
+                    <h3 class="mt-3 text-center " style="font-weight: 600;">Pick your Order</h3>
+                            <div class="container px-4 px-lg-5 mt-5">
+                                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 " >
+                                    <div class="col mb-5"  *ngFor="let sauce of allsauce| filter : searchterm : 'name' ">
+                                        <div style="height: 350px;" class="card p-3 ">
+                                            <!-- Product image-->
+                                            <img style="height: 150px;" [src]="sauce.image" class="card-img-top"  alt="..." />
+                                            <!-- Product details-->
+                                            <div class="card-body p-4">
+                                                <div class="text-center mb-4">
+                                                    <!-- Product name-->
+                                                    <h5 class="fw-bolder">{{sauce.name}}</h5>
+                                                    <!-- Product price-->
+                                                    Price : {{sauce.price}} $
+                                            </div>
+                                            <!-- Product actions-->
+                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                                <div class="d-flex justify-content-evenly">
+                                                    <!-- view link -->
+                                                    <a class="btn btn-warning mt-auto "  routerLink="view/{{sauce.id}}" ><i class="fa fa-solid fa-eye text-light"></i> </a>
+                                                    <!-- add cart btn -->
+                                                    <button (click)="addtocart(sauce)" class="btn btn-success"><i class="fa fa-solid fa-cart-plus"></i> </button>
+                                                </div>
+                                            
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>  

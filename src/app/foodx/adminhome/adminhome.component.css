@@ -1,0 +1,18 @@
+.deleteuser{
+    transition: all .8s ease;
+}
+.deleteuser:hover{
+    box-shadow:  rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.fooddetails td{
+    font-size: 20px;
+    font-weight: 500;
+}
+.producttable{
+    border-radius: 8rem;
+}
+.thead{
+    background-color: blueviolet;
+    height: 50px;
+    padding: 10px;
+}

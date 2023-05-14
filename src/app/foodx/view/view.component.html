@@ -1,0 +1,61 @@
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container px-4 px-lg-5">
+        <a class="navbar-brand" routerLink=""><img style="width: 90px;" src="https://foodx.ca/wp3/wp-content/uploads/2020/02/food-x-black.png" alt=""></a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" style="margin-left: 800px;" id="navbarSupportedContent">
+
+            <form class="d-flex align-items-center">
+                <a class="btn " style="font-weight: 700;font-size: 1.2rem;" routerLink="products/cart">
+                    <i style="color: orange;" class="fa fa-sharp fa-solid fa-circle-info me-1"></i>
+                    Help
+                </a>
+                <div *ngIf="loginstatus" class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                      {{user}}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li><a class="dropdown-item" (click)="logout()" routerLink="">Logout</a></li>
+                    </ul>
+                  </div>
+                
+            </form>
+        </div>
+    </div>
+</nav>
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5 my-5" >
+        <div class="row gx-4 gx-lg-5 align-items-center " >
+            <div class="col-md-1"></div>
+            <div class="col-md-5" ><img style="height: 350px;width: 300px;" class="card-img-top mb-5 mb-md-0 w-75" [src]="foods.image" alt="..." /></div>
+            <div class="col-md-6">
+                <div class="small mb-1">ID : {{foods._id}}</div>
+                <h1 class="display-5 fw-bolder me-3">{{foods.name}} <i *ngIf="foods.vegetarian=='true'" class="fa-solid fa-circle fa-xs" style="color: #14cc20;"></i> <i *ngIf="foods.vegetarian=='false'" class="fa-solid fa-circle fa-xs" style="color: #cc1414;"></i> </h1>
+                <div *ngIf="foods.ingredients!=0">
+                <h2>Ingredients</h2>
+                <div>
+                    <li *ngIf="foods.ingredients[0].length!=0">{{foods.ingredients[0]}}</li>
+                    <li *ngIf="foods.ingredients[1].length!=0">{{foods.ingredients[1]}}</li>
+                    <li *ngIf="foods.ingredients[2].length!=0">{{foods.ingredients[2]}}</li>
+                    <li *ngIf="foods.ingredients[3].length!=0">{{foods.ingredients[3]}}</li>
+                    <li *ngIf="foods.ingredients[4].length!=0">{{foods.ingredients[4]}}</li>
+                </div>
+                </div>
+                <div class="fs-5 mb-5 mt-3">
+                    
+                    <span class="fw-bolder text-danger">${{foods.price}}</span>
+                </div>
+                <p class="lead">{{foods.description}}</p>
+                <div class="d-flex justify-content-between">
+                    <!-- <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" /> -->
+                    <!-- wishlist -->
+                    <!-- add to cart -->
+                    <button (click)="addtocart(foods)" class="btn btn-outline-success flex-shrink-0" type="button">
+                        <i class="fa fa-solid fa-cart-plus  me-2"></i>
+                        Add to cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

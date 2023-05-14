@@ -1,0 +1,39 @@
+.card{
+    transition: all 1s ease;
+}
+
+.card:hover{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.main{
+    background: url(https://www.igeeksblog.com/wp-content/uploads/2021/03/best-food-photography-apps-for-iphone-and-ipad.jpg);
+}
+nav{
+    width: 100%;
+    position: fixed;
+    z-index: 1001;
+}
+.home-login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-login button{
+    width: 150px;
+}
+.buttons{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.buttons button{
+    width: 120px;
+    margin-right: 10px;
+}
+.card{
+    border-radius: 1rem;
+}
