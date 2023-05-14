@@ -11,7 +11,7 @@ const options={
 })
 export class ApiService {
 
-  base_url='http://localhost:3000'
+  base_url='https://foodx-visakh.netlify.app'
   constructor(private http:HttpClient) { }
 
   searchterm= new BehaviorSubject('')
