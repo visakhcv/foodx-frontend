@@ -11,7 +11,7 @@ const options={
 })
 export class ApiService {
 
-  base_url='https://foodx-visakh.netlify.app'
+  base_url='https://foodx-server.onrender.com'
   constructor(private http:HttpClient) { }
 
   searchterm= new BehaviorSubject('')
